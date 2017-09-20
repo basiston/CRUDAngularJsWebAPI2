@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container" ng-controller="myController">
+    <h6>CRUD Registration operaion using AngularJS and ASP.NET WebAPI2</h6>
+    <div class="row main">
+
+        <form>
+            <input type="text" ng-model="personid" ng-value="personresult.PersonId" id="personid" hidden/>
+            <div class="form-group">
+                <label for="personname" class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" ng-bind="personname" class="form-control" ng-value="personresult.PersonName" ng-model="personname" id="personname"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="country" class="col-sm-2 control-label">Select Country:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <select class="form-control" id="country" ng-value="personresult.SelectedCountryCode" ng-options="s.CountryName for s in result track by s.CountryCode" ng-model="selectedCountry" ng-change="GetCities()"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="city">Select City:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <select ng-disabled="!cityresult.length" class="form-control" id="city" ng-value="personresult.SelectedCityCode" ng-model="selectedcity" ng-options="s.CityName for s in cityresult track by s.CityCode"></select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input ng-hide="selectedCountry !=='6'" type="text" ng-model="othercountry"/>
+            </div>
+
+            <div class="">
+                <button ng-click="Save()" class="btn btn-primary btn-lg">Save</button>
+                <button ng-click="UpdateUser(personresult.PersonId)" class="btn btn-primary btn-lg">Update</button>
+                <button ng-click="DeleteUser(personresult.PersonId)" class="btn btn-primary btn-lg">Delete</button>
+                <button ng-click="Clear()" class="btn btn-primary btn-lg">Clear</button>
+            </div>
+            <div class="form-group">
+                {{Message}}
+            </div>
+        </form>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th hidden>Country Code</th>
+                <th>Country</th>
+                <th hidden>City Code</th>
+                <th>City</th>
+            </tr>
+            <tr ng-repeat="p in personlist" ng-click="fnClick(p)" style="cursor: pointer">
+                <td hidden>{{p.PersonId}}</td>
+                <td>{{p.PersonName}}</td>
+                <td hidden>{{p.SelectedCountryCode}}</td>
+                <td>{{p.SelectedCountry}}</td>
+                <td hidden>{{p.SelectedCityCode}}</td>
+                <td>{{p.SelectedCity}}</td>
+            </tr>
+        </table>
+
+        <h1>{{error}} {{cityerror}}</h1>
+    </div>
+
+</div>
